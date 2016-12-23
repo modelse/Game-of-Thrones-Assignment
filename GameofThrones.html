@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>GoT House Information</title>
+        <link rel="stylesheet" type="text/css" href="GameofThrones.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                // Find the Id of the picture I click
+                $("img").click(function(){
+                    var id = (this).id;
+
+                // Take the id I assigned to that image and put on the end of a URL I am calling House
+                    var house="http://www.anapioficeandfire.com/api/houses/" + id;
+                    console.log(house);
+
+
+
+                // Use that URL to pull the information for the house from the GoT API
+                    $.get(house, function(res) {
+                        console.log(res);
+
+                        // name variable title. Take the information i grabbed from the house. Find the array named title and cycle through it to find all the title names
+                            var title=" " ;
+                            for(var i=0; i<res.titles.length; i++){
+                             title +="<li>" + res.titles[i] + "</li>";
+                                console.log(title);
+                            }
+                    // Name a variable called find and it will pull the link to a houses heir from the data
+
+                        // var find= res.heir
+                        // console.log(find)
+                        //
+                        // // name variable heir. Grab the data from that characters API and name my variable heir the name of the character
+                        // var heir=" ";
+                        // $.get(find, function(data) {
+                        //      heir=data.name;
+                        //     console.log(heir)
+
+                        // // name variable title. Take the information i grabbed from the house. Find the array named title and cycle through it to find all the title names
+                        //     var title=" " ;
+                        //     for(var i=0; i<res.title; i++){
+                        //      types +="<li>" + res.title[i] + "</li>";
+                        //         console.log(res.types);
+                        //     }
+                        // Now take everything I have found and put it onto my page in the area I set aside for the desctiption
+                        $("#description").html("<h3>House Description</h3>" + "<h4> Name: " + res.name + "</h4>"+
+                    "<h4>Coat of Arms: " + res.coatOfArms + "</h4><h4>" + title + "</h4>");
+                        }, "json");
+
+                        // }, "json");
+                })
+
+            })
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="top">
+                <h1>Game of Thrones</h1>
+            </div>
+            <div id="houses">
+                <div class="pics">
+                    <img id="362" src="stark.jpg">
+                    <img id="229" src="lannister.jpg">
+                </div>
+                <div class="pics">
+                    <img id="378" src="targaryen.jpg">
+                    <img id="15" src="baratheon.png">
+                </div>
+                <div id="description">
+                    <h3>House Description</h3>
+                </div>
+        </div>
+    </body>
+</html>
